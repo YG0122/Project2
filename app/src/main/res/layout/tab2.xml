@@ -14,7 +14,6 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:layout_below="@id/btn_album"
-
         app:layout_constraintBottom_toTopOf="@+id/btn_camera"
         android:numColumns="2">
 
@@ -22,25 +21,17 @@
     </GridView>
 
     <ImageButton
-        android:id="@+id/plus1"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="20dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/plus" />
-
-    <ImageButton
-        android:id="@+id/minus1"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:id="@+id/btn_sync"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/minus" />
+        android:src="@android:drawable/ic_popup_sync" />
+
     <!--<androidx.constraintlayout.widget.ConstraintLayout-->
+
     <Button
         android:id="@+id/btn_camera"
         android:layout_width="wrap_content"
@@ -68,6 +59,26 @@
         app:layout_constraintLeft_toRightOf="@+id/btn_camera"
         app:layout_constraintRight_toRightOf="parent" />
 
+    <Button
+        android:id="@+id/btn_cloud"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="20dp"
+        android:text="Show Cloud"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btn_send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="20dp"
+        android:text="Upload Cloud"
+        android:textAllCaps="false" />
 
 
 </RelativeLayout>

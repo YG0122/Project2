@@ -115,11 +115,12 @@ public class gridAdapter extends BaseAdapter {
         if (mData != null) {
             try {
                 JSONObject item = mData.getJSONObject(position);
-                Bitmap photo = (Bitmap) item.get("Photo");
+                Bitmap photo = (Bitmap) item.get("bitmap");
+                if(photo instanceof Bitmap) {
+                    Log.d("asdf","asdf");
+                }
                 if (photo != null) {
                     holder.icon.setImageBitmap(photo);
-                } else {
-
                 }
 
             } catch (JSONException e) {

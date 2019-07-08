@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -17,7 +16,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
@@ -25,13 +23,10 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
-
-import com.example.Tab5.ui.main.Godbgallery;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -56,10 +51,10 @@ import java.util.List;
 
 import static android.os.Environment.getExternalStorageDirectory;
 
-public class Tab2 extends Fragment implements View.OnClickListener {
+public class Tab2 extends Fragment implements View.OnClickListener{
     private ImageView imgMain;
-    private Button btnCamera, btnAlbum, btnSend, btnCloud;
-    private ImageButton btnSync;
+    private Button  btnCloud;
+    private ImageButton btnCamera, btnAlbum, btnSend, btnSync;
     static GridView gridView;
     static gridAdapter adapter = null;
     private Bitmap bitmap;
@@ -162,11 +157,13 @@ public class Tab2 extends Fragment implements View.OnClickListener {
             }
             case R.id.btn_sync: {
                 sync_server();
-                Toast.makeText(getContext(), "Synchronize Success", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Synchronized", Toast.LENGTH_SHORT).show();
+                break;
             }
             case R.id.btn_cloud: {
                 show_cloud(v);
                 Toast.makeText(getContext(), "Cloud", Toast.LENGTH_SHORT).show();
+                break;
 
             }
         }
@@ -198,63 +195,23 @@ public class Tab2 extends Fragment implements View.OnClickListener {
         startActivity(i);
     }
 
-    public String getJarray(String... urls) {
-        try {
-            HttpURLConnection con = null;
-            BufferedReader reader = null;
-            try {
-                URL url = new URL("http://143.248.39.55:8080/api/gallerys");//url을 가져온다
-                //URL url = new URL(urls[0]);//url을 가져온다.
-                con = (HttpURLConnection) url.openConnection();    //con : 연결 객체
-                con.setRequestMethod("GET");//Get방식으로 보냄
-                con.setRequestProperty("Cache-Control", "no-cache");//캐시 설정
-                con.setRequestProperty("Content-Type", "application/json");//application JSON 형식으로 전송
-                con.setRequestProperty("Accept", "text/html");//서버에 response 데이터를 html로 받음
-                con.setDoInput(true);
-                con.connect();//연결 수행
-                //입력 스트림 생성
-                InputStream stream = con.getInputStream();   //con이라는 연결 객체를 통해 입력 스트림 생성
-                //속도를 향상시키고 부하를 줄이기 위한 버퍼를 선언한다.
-                reader = new BufferedReader(new InputStreamReader(stream));
-                //실제 데이터를 받는곳
-                StringBuffer buffer = new StringBuffer();
-                //line별 스트링을 받기 위한 temp 변수
-                String line = "";
-                //아래라인은 실제 reader에서 데이터를 가져오는 부분이다. 즉 node.js서버로부터 데이터를 가져온다.
-                while ((line = reader.readLine()) != null) {
-                    buffer.append(line);
-                }
-                return buffer.toString();
-                //다 가져오면 String 형변환을 수행한다. 이유는 protected String doInBackground(String... urls) 니까
-                //아래는 예외처리 부분이다.
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-                return null;
-            } catch (IOException e) {
-                e.printStackTrace();
-                return null;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-
     public void sync_server(){
-        String result = getJarray();
+        JSONArray jArray = new JSONArray();
+        int list_size= Godbgallery.listdata.size();
         try {
-            JSONArray new_jArray = new JSONArray(result);
-            for (int i = 0; i < new_jArray.length(); i++) {
-                JSONObject obj = new_jArray.getJSONObject(i);
-                obj.accumulate("bitmap", getBitmapFromString(obj.getString("bitmap")));
+            for (int i = 0; i < list_size; i++) {
+                JSONObject obj = new JSONObject();
+                obj.put("bitmap", Godbgallery.listdata.get(i));
+                obj.put("date", Godbgallery.arrayname[i]);
+                jArray.put(obj);
             }
-        } catch (JSONException e) {
+        }catch(JSONException e) {
             e.printStackTrace();
         }
-        adapter = new gridAdapter(new_jArray);
+        adapter = new gridAdapter(jArray);
         gridView.setAdapter(adapter);
-    }
+        }
+
 
     private Bitmap getBitmapFromString(String stringPicture) {
         byte[] decodedString = Base64.decode(stringPicture, Base64.DEFAULT);
@@ -280,7 +237,7 @@ public class Tab2 extends Fragment implements View.OnClickListener {
                 SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 Date time = new Date();
                 String time1 = format1.format(time);
-                jsonObject.accumulate("bitmap", a);
+                jsonObject.accumulate("bitmap", a);  //a는 String
                 jsonObject.accumulate("date", time1);
                 HttpURLConnection con = null;   //http client 객체 생성
                 BufferedReader reader = null;
@@ -389,7 +346,6 @@ public class Tab2 extends Fragment implements View.OnClickListener {
                 return;
             }
             if (requestCode == PICK_FROM_ALBUM) {
-
                 if (data == null) {
                     return;
                 }
@@ -404,8 +360,6 @@ public class Tab2 extends Fragment implements View.OnClickListener {
                 }
 
             } else if (requestCode == PICK_FROM_CAMERA) {
-
-//             갤러리에 나타나게
                 MediaScannerConnection.scanFile(getActivity().getApplicationContext(), new String[]{photoUri.getPath()}, null, new MediaScannerConnection.OnScanCompletedListener() {
                     public void onScanCompleted(String path, Uri uri) {
                         Log.v("File scan", "file:" + path + "was scanned successfully");
@@ -418,13 +372,16 @@ public class Tab2 extends Fragment implements View.OnClickListener {
                 }
 
             }
-
-
             JSONObject sObject = new JSONObject();
             try {
-                sObject.put("Photo", bitmap);
+                sObject.put("bitmap", bitmap);
+                SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                Date time = new Date();
+                String time2 = format1.format(time);
+                sObject.put("date", time2);
                 sObject.put("Uri", photoUri.toString());
                 jArray.put(sObject);
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }

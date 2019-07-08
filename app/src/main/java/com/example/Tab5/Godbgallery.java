@@ -1,4 +1,4 @@
-package com.example.Tab5.ui.main;
+package com.example.Tab5;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -37,10 +37,10 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Godbgallery extends AppCompatActivity {
-    public static ArrayList<Bitmap> listdata = new ArrayList<Bitmap>();
+    //public static ArrayList<Bitmap> listdata = new ArrayList<Bitmap>();
     public int[] array1 = new int[500];
-    public String[] arrayname;
-
+    public static String[] arrayname;
+    public static ArrayList<Bitmap> listdata = new ArrayList<Bitmap>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

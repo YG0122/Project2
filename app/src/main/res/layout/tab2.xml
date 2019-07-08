@@ -12,10 +12,11 @@
         android:id="@+id/gridView1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
         android:layout_below="@id/btn_album"
-        app:layout_constraintBottom_toTopOf="@+id/btn_camera"
-        android:numColumns="2">
+        android:layout_marginTop="-1dp"
+        android:gravity="center"
+        android:numColumns="2"
+        app:layout_constraintBottom_toTopOf="@+id/btn_camera">
 
 
     </GridView>
@@ -25,60 +26,57 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="20dp"
         android:src="@android:drawable/ic_popup_sync" />
-
     <!--<androidx.constraintlayout.widget.ConstraintLayout-->
 
-    <Button
+    <ImageButton
         android:id="@+id/btn_camera"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="3dp"
-
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="16dp"
-        android:text="카메라 사진찍기"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="20dp"
+        android:src="@android:drawable/ic_menu_camera"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/btn_album" />
+        app:layout_constraintLeft_toLeftOf="parent" />
 
-    <Button
+    <ImageButton
         android:id="@+id/btn_album"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/btn_camera"
-        android:layout_marginLeft="27dp"
-        android:layout_marginBottom="-1dp"
-        android:layout_toRightOf="@id/btn_camera"
-        android:text="앨범에서 선택하기"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/btn_camera"
-        app:layout_constraintRight_toRightOf="parent" />
+        android:layout_alignLeft="@id/btn_camera"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="70dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:src="@android:drawable/ic_menu_gallery" />
 
     <Button
         android:id="@+id/btn_cloud"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
         android:layout_centerInParent="true"
-        android:layout_marginBottom="20dp"
-        android:text="Show Cloud"
+        android:layout_marginTop="10dp"
+        android:text="Cloud"
         android:textAllCaps="false" />
 
-    <Button
+    <ImageButton
         android:id="@+id/btn_send"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@id/btn_sync"
+        android:layout_alignParentTop="true"
         android:layout_marginLeft="20dp"
-        android:layout_marginBottom="20dp"
-        android:text="Upload Cloud"
-        android:textAllCaps="false" />
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="70dp"
+        android:src="@android:drawable/ic_menu_upload" />
 
 
 </RelativeLayout>

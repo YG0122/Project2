@@ -2,26 +2,15 @@ package com.example.Tab5;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Matrix;
-import android.media.Image;
 import android.widget.BaseAdapter;
 
 import java.util.ArrayList;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.Toast;
-
-import com.example.Tab5.ui.main.Godbgallery;
-
-import static com.example.Tab5.ui.main.Godbgallery.listdata;
 
 public class GridViewAdapter extends BaseAdapter {
     Context context = null;
